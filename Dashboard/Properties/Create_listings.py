@@ -78,7 +78,7 @@ if "dashboard" in current_url:
             next_btn = wait.until(EC.visibility_of_element_located((By.XPATH,"//button[contains(text(),'Next')]")))
             next_btn.click()
             time.sleep(4)
-
+#jhdfgj
             current_url = driver.current_url
             if 'add-property-features' in current_url:
                 print("User successfully redirected to the add-property-features page")
