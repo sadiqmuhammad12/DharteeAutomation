@@ -1,5 +1,4 @@
 # Verify that the user is able to buy a packages
-
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -27,11 +26,8 @@ btn_element1.click()
 
 time.sleep(6)
 
-# get the current URL of the page
-current_url = driver.current_url
-
 # check if the expected text is in the URL
-if "dashboard" in current_url:
+if "dashboard" in driver.current_url:
     # print("User is logged in and redirected to the dashboard page")
     driver.find_element(By.CLASS_NAME, 'css-1ljyfa8').click()
     time.sleep(3)
@@ -45,15 +41,36 @@ if "dashboard" in current_url:
         btn_clk = wait.until(EC.visibility_of_element_located((By.XPATH, "//button[contains(text(),'Buy Package')]")))
         btn_clk.click()
         time.sleep(3)
-        current_url = driver.current_url;
-        if 'packages' in current_url:
-            print("User is redirected to the packages page")
+
+        if 'packages' in driver.current_url:
+            # print("User is redirected to the packages page")
+            wait = WebDriverWait(driver, 20)
+
+            btn_element = driver.find_element(By.XPATH, '//button[text()="Activated Again"]')
+            btn_element.click()
+
+            add_files_input =driver.find_element(By.ID,'uploadImages')
+            add_files_input.send_keys('C:/laptop.png')
+            time.sleep(8)
+
+            upload_btn = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="root"]/div[2]/div/div[1]/div[3]/button')))
+            upload_btn.click()
+            time.sleep(4)
+
+            user_pck = wait.until(EC.visibility_of_element_located((By.XPATH, "//button[contains(text(),'User Package')]")))
+            user_pck.click()
+            time.sleep(6)
+
+            if 'ThankYou' in driver.current_url:
+                print('User is redirected to the ThankYou page')
+            else:
+                print('User is not redirected to the ThankYou page')
 
         else:
-            print("User does not redirected to the packages page")
+            print("User is not redirected to the packages page")
 
     else:
-        print('User does not redirected to the security-setting page')
+        print('User is not redirected to the security-setting page')
 else:
     print("User login failed or was not redirected to the dashboard page")
 

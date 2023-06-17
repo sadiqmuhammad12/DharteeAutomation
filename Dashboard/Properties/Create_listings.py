@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 import time
-import pyautogui
+# import pyautogui
 from selenium.webdriver.support import expected_conditions as EC
 
 
@@ -68,15 +68,20 @@ if "dashboard" in current_url:
             time.sleep(4)
 
             driver.find_element(By.CLASS_NAME,'form-control').send_keys('i-11')
-            time.sleep(4)
+            time.sleep(5)
 
             li_element = wait.until(EC.visibility_of_element_located((By.XPATH, "//li[contains(text(), 'I-11, Islamabad, Islamabad Capital Territory, Pakistan')]")))
             # click on the element
             li_element.click()
             time.sleep(4)
 
-            next_btn = wait.until(EC.visibility_of_element_located((By.XPATH,"//button[contains(text(),'Next')]")))
+            # next_btn = wait.until(EC.visibility_of_element_located((By.XPATH,"//button[contains(text(),'Next')]")))
+            # next_btn.click()
+
+            next_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Next')]")))
+            time.sleep(4)
             next_btn.click()
+
             time.sleep(4)
             current_url = driver.current_url
             if 'add-property-features' in current_url:
@@ -85,6 +90,7 @@ if "dashboard" in current_url:
 
                 #Property Type
                 btn_clk = wait.until(EC.visibility_of_element_located((By.XPATH, "//p[contains(text(),'Commercial')]")))
+                time.sleep(4)
                 btn_clk.click()
 
                 clk_prop_type = wait.until(EC.visibility_of_element_located((By.XPATH,'//*[@id="root"]/div[2]/div[2]/div[2]/div[1]/div/div[1]/div/div/div/div[1]/div/div[4]/div/div')))
@@ -121,6 +127,7 @@ if "dashboard" in current_url:
 
                 # Property Features
                 # Find and click on the <p> tags with the specified text
+                time.sleep(5)
                 driver.find_element(By.XPATH,"//p[contains(text(),'Study Room')]").click()
                 driver.find_element(By.XPATH,"//p[contains(text(),'Drawing Room')]").click()
                 driver.find_element(By.XPATH,"//p[contains(text(),'Furnished')]").click()
